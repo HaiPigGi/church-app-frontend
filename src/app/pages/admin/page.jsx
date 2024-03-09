@@ -126,9 +126,9 @@ function Admin() {
   };
 
   return (
-    <div className="flex relative h-auto w-screen ">
+    <div className="flex relative h-auto w-screen overflow-x-hidden overflow-y-auto">
       <ScrollArea
-        className={` ${open ? 'w-72' : 'w-20'} p-3 h-full duration-300 bg-secondary fixed left-0`}
+        className={` ${open ? 'w-72' : 'w-20'} p-3 duration-300 bg-secondary fixed left-0`}
       >
         <FaAnglesLeft
           className={` absolute cursor-pointer -right-3 top-9 w-7 border-2 border-black rounded-full ${!open && 'rotate-180'}`}

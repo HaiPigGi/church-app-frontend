@@ -82,7 +82,7 @@ export default function Jenismisa() {
 
   return (
     <div className="w-full h-full">
-      <div className="container mx-auto mt-8 p-8 sm:p-8 ">
+      <div className="container mx-auto p-8 sm:p-8 ">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-semibold mb-4 text-center min-[360px]:max-[765px]:ml-[-3rem]">
             Input Jenis Misa

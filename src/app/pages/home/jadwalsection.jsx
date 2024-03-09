@@ -70,26 +70,30 @@ function JadwalMisaSection() {
               className="rounded-md flex justify-center md:justify-start items-center w-full h-full "
             >
               {Jadwal?.length > 0 && (
-                <div className="border ml-16 bg-white w-full md:max-h-[400px] min-w-[300px] md:min-h-[400px] md:min-w-[350px] max-w-[500px] h-full border-secondary rounded-sm p-5 shadow-sm shadow-primary">
-                  <h1 className="text-xl font-light text-center mt-[-0.5rem]">
+                <div className="border md:ml-16 bg-white w-full md:max-h-[400px] min-w-[300px] md:min-h-[400px] md:min-w-[350px] max-w-[500px] h-full border-secondary rounded-sm p-5 shadow-sm shadow-primary">
+                  <h1 className="text-sm md:text-xl font-light text-center mt-[-0.5rem]">
                     Jadwal Dalam Seminggu
                   </h1>
-                  <thead>
-                    <tr>
-                      <th className="py-2 px-4 border-b">Hari</th>
-                      <th className="py-2 px-4 border-b">Jenis Misa</th>
-                      <th className="py-2 px-4 border-b">Waktu Mulai</th>
-                      <th className="py-2 px-4 border-b">Waktu selesai</th>
-                    </tr>
-                  </thead>
-                  {Jadwal?.map((row, index) => (
-                    <div key={index} className="flex justify-between items-center py-3 border-b border-black">
-                      <h3 className="text-primary font-bold ml-3">{row.hari}</h3>
-                      <h3 className='mr-10 ml-[-3rem]'>{row.jenis_misa.jenis}</h3>
-                      <p className='mr-10 ml-[-3rem]'>{row.waktu_mulai}</p>
-                      <p className='mr-10 ml-[-3rem]'>{row.waktu_selesai}</p>
-                    </div>
-                  ))}
+                  <table className='w-full'>
+                    <thead >
+                      <tr>
+                        <th className="py-2 px-2 border-b text-[10px] md:text-[15px]">Hari</th>
+                        <th className="py-2 px-2 border-b text-[10px] md:text-[15px]">Jenis Misa</th>
+                        <th className="py-2 px-2 border-b text-[10px] md:text-[15px]">Waktu Mulai</th>
+                        <th className="py-2 px-2 border-b text-[10px] md:text-[15px]">Waktu selesai</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {Jadwal?.map((row, index) => (
+                      <tr key={index} className="border-b border-black text-[12px] text-center h-full overflow-y-auto">
+                        <td className="text-primary font-boldpy-2">{row.hari}</td>
+                        <td className='py-2'>{row.jenis_misa.jenis}</td>
+                        <td className='py-2'>{row.waktu_mulai}</td>
+                        <td className='py-2'>{row.waktu_selesai}</td>
+                      </tr>
+                    ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </motion.div>

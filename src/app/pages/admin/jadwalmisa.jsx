@@ -78,7 +78,7 @@ export default function jadwal() {
   };
 
   return (
-    <div className="pt-10 flex flex-col items-center justify-center w-full h-full px-5">
+    <div className="pt-10 flex flex-col items-center justify-center w-full h-screen overflow-y-auto px-5">
       <h1 className="font-bold text-3xl mb-2 min-[360px]:max-[765px]:text-xl">
         Tambah Jadwal Misa
       </h1>

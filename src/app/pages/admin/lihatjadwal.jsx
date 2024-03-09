@@ -41,7 +41,7 @@ export default function lihatjadwal() {
     return;
   };
   return (
-    <div className="max-w-3xl mx-auto mt-8 h-full w-full">
+    <div className="max-w-3xl mx-auto h-full w-full">
       <h1 className="text-3xl font-semibold mb-4 text-center">
         Daftar Jadwal Misa
       </h1>

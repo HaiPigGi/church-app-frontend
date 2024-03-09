@@ -44,7 +44,7 @@ export default function Pesan() {
   };
 
   return (
-    <div className="w-full h-screen px-5">
+    <div className="w-full h-screen px-5 overflow-y-auto">
       <div className="min-[360px]:max-[765px]:hidden">
         <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">
           Pesan Dan Kritik
