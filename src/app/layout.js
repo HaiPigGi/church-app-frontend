@@ -7,6 +7,11 @@ const poppins = Poppins({
   weight: ['100', '200', '300', '400', '500'],
 });
 
+export const metadata = {
+  title:"st.Markus Melak",
+}
+
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">

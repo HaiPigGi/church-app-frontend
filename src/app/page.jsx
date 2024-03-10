@@ -4,7 +4,6 @@ import PageHome from './pages/home/page';
 import Loading from '@/components/Fragments/Loading/loading';
 import { useAppSelector } from '@/lib/hook';
 import MainLayout from '@/components/Layouts/MainLayout';
-import RootLayout from './layout';
 
 export default function Home() {
   const AuthStatus = useAppSelector((state) => state.session.status);
@@ -22,8 +21,6 @@ export default function Home() {
   }, [AuthStatus]);
 
   return (
-    <RootLayout>
       <MainLayout>{appReady ? <>{renderBasedAuth}</> : <Loading />}</MainLayout>
-    </RootLayout>
   );
 }
