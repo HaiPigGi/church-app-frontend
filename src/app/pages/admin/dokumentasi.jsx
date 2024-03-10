@@ -4,7 +4,7 @@ import { post_Images } from '@/app/api/Admin/dokementasi/routes';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import useModalContent from '@/lib/customHooks/useModalContent';
-
+import './style/style.css';
 export default function AllDokumentasi() {
   const [Dok, setDok] = useState({
     tahun: '',
@@ -118,6 +118,7 @@ export default function AllDokumentasi() {
       >
         {/* gambar */}
         <div className="flex flex-col mb-3">
+          <label className="text-red-700 font-mono mb-2 ">ALERT : *SATU FILE IMAGE MINIMAL KURANG DARI 4 MB AGAR LEBIH CEPAT*</label>
           <label className="text-red-700 font-mono mb-2 ">Image :</label>
           <input
             type="file"
@@ -156,18 +157,22 @@ export default function AllDokumentasi() {
             onChange={handleChange}
           >
             <option value="select">select</option>
-            <option value="natal">Natal</option>
+            <option value="Kamis Putih">Kamis Putih</option>
+            <option value="Jumat Agung">Jumat Agung</option>
+            <option value="Sabtu Suci">Sabtu Suci</option>
             <option value="paskah">Paskah</option>
-            <option value="misdinar">Misdinar</option>
-            <option value="OMK">OMK</option>
+            <option value="Malam Natal">Malam Natal</option>
+            <option value="natal">Natal</option>
             <option value="DPP">DPP</option>
+            <option value="OMK">OMK</option>
+            <option value="misdinar">Misdinar</option>
             <option value="kegiatan lain">Kegiatan Lain</option>
           </select>
         </div>
         <div className="flex justify-center mb-3">
           <button className="border-2 border-yellow-600 rounded-lg px-3 py-2 text-yellow-400 cursor-pointer hover:bg-yellow-600 hover:text-yellow-200 relative">
             {isLoading && (
-              <div className="absolute top-0 left-0 h-full bg-red-400 rounded-full animate-slide" />
+              <div className="spinner"></div>
             )}
             {isLoading ? 'Loading' : 'Submit'}
           </button>
@@ -178,7 +183,6 @@ export default function AllDokumentasi() {
           message={alert.message}
           onClose={alert.onClose}
         />
-        ;
       </form>
     </div>
   );

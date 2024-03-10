@@ -34,6 +34,25 @@ const Member = () => {
   const [loadingState, setLoadingState] = useState();
   const [modalContent, setModalContent] = useState();
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  
+
+  // Mendapatkan indeks awal dan akhir dari data yang ingin ditampilkan pada halaman yang sedang aktif
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = employeeList.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Fungsi untuk mengubah halaman
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Menghitung jumlah total halaman
+const pageNumbers = [];
+for (let i = 1; i <= Math.ceil(employeeList.length / itemsPerPage); i++) {
+  pageNumbers.push(i);
+}
+
   const handleCreate = async () => {
     const { organitation_name, position_name } = employee;
     setLoadingState('loading');
@@ -466,7 +485,7 @@ const Member = () => {
               </tr>
             </thead>
             <tbody className="text-sm font-sans text-center">
-              {employeeList.map((emp) => (
+              {currentItems.map((emp) => (
                 <tr
                   key={emp.members_id}
                   className="mb-4  p-4 rounded-md border-b cursor-pointer hover:bg-slate-100"
@@ -500,6 +519,20 @@ const Member = () => {
             </tbody>
           </table>
           {loadingState == 'loading' && <LoadingBounce />}
+        {/* Element navigasi halaman */}
+        {employeeList.length > itemsPerPage && (
+          <div className="flex justify-center mt-4">
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                className="mx-1 px-3 py-1 bg-gray-200 text-gray-800 rounded-full hover:bg-gray-400"
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </button>
+            ))}
+          </div>
+        )}
         </div>
       </div>
 

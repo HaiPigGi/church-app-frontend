@@ -85,6 +85,8 @@ export default function Mesdinar() {
                       </div>
                     ),
                 )}
+                <br />
+                <br />
 
                 {/* Gambar wakil */}
                 {misdinarData.map(
@@ -118,15 +120,16 @@ export default function Mesdinar() {
                     ),
                 )}
               </div>
+              <br />
+              <br />
 
-              <div className="flex justify-center items-center mb-5 overflow-x-auto  mt-10 h-[500px]" >
-                {/* Gambar Sekretaris 1 */}
+              <div className="flex flex-col md:flex-row justify-center items-center relative">
                 {misdinarData.map(
                   (data, index) =>
                     data.position_name === 'Sekretaris 1' && (
                       <div
                         key={index}
-                        className="relative  md:mr-10 "
+                        className="relative mb-5 md:mr-10 md:mb-[-1.4rem] min-[357px]:mb-8"
                       >
                         <img
                           className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
@@ -151,14 +154,14 @@ export default function Mesdinar() {
                       </div>
                     ),
                 )}
-
-                {/* Gambar Bendahara 1 */}
+                <br />
+                <br />
                 {misdinarData.map(
                   (data, index) =>
                     data.position_name === 'Bendahara 1' && (
                       <div
                         key={index}
-                        className="relative md:mr-10"
+                        className="relative min-[357px]:mt-10 min-[357px]:mb-5"
                       >
                         <img
                           className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
@@ -183,46 +186,59 @@ export default function Mesdinar() {
                       </div>
                     ),
                 )}
-                
               </div>
-              {/* card anggota */}
-              <div className="block justify-center items-center mb-5 overflow-x-auto w-[800px] md:w-[1500px] mx-auto">
-                {/* Gambar Anggota */}
+              <br />
+              <br />
+
+              {/* Seksi-Seksi  */}
+              <div className="block justify-center items-center mb-5 overflow-x-auto overflow-y-hidden w-full md:w-[1500px] mx-auto">
+                {/* Seksi-Seksi  */}
                 {jenisAnggota.map((jenis) => {
                   return (
-                    <div className='relative flex  mb-20 h-full max-w-[100rem]'>
-                      {
-                      misdinarData.map((data, index) => {
-                        return (
-                          data.position_name == jenis && (
-                            <div
-                            key={index}
-                            className="relative md:mr-10 min-[357px]:mb-8 min-w-[300px]"
-                            >
-                              <img
-                                className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
-                                src={data.image.url}
-                                alt=""
-                              />
-                              <img
-                                className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
-                                src="/img/Rectangle 20.png"
-                                alt=""
-                              />
-                              <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
-                                <p className="text-white text-lg font-bold">
-                                  {data.members_name}
-                                </p>
+                    <div
+                      key={jenis}
+                      className="relative flex flex-col items-center mb-20 max-w-[100rem]"
+                    >
+                        <br />
+              <br />
+
+                      <h3 className="text-center text-black font-semibold mb-5">
+                        {jenis}
+                      </h3>
+                      <div className="flex flex-wrap justify-start px-2 lg:px-0">
+                        {misdinarData.map((data, index) => {
+                          return (
+                            data.position_name === jenis && (
+                              <div key={index} className="relative mb-8 mr-4">
+                                <div className="text-center">
+                                  {' '}
+                                  {/* Tambahkan kelas text-center */}
+                                  <img
+                                    className="object-cover rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                                    src={data.image.url}
+                                    alt=""
+                                  />
+                                  <img
+                                    className="object-cover absolute top-0 left-0 rounded-[0.9rem] h-[25rem] w-full md:w-[20rem]"
+                                    src="/img/Rectangle 20.png"
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="absolute top-[21rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                                  <p className="text-white text-lg font-bold">
+                                    {data.members_name}
+                                  </p>
+                                </div>
+                                <div className="absolute top-[25.5rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
+                                  <p className="text-primary text-lg font-bold">
+                                    {data.position_name}
+                                  </p>
+                                </div>
                               </div>
-                              <div className="absolute top-[25.5rem] left-1/2 transform -translate-x-1/2 text-center w-full md:w-[20rem]">
-                                <p className="text-primary text-lg font-bold">
-                                  {jenis}
-                                </p>
-                              </div>
-                            </div>
-                          )
-                        );
-                      })}
+                            )
+                          );
+                        })}
+                      </div>
                     </div>
                   );
                 })}

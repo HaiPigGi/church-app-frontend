@@ -13,11 +13,25 @@ function JadwalMisaSection() {
   const [Jadwal, setJadwal] = useState([]);
 
   const fetchData = async () => {
-      const res = await get_jadwal();
-      const sortedJadwal = res.data.sort((a, b) => b.hari.localeCompare(a.hari));
-      setJadwal(sortedJadwal);
-  };
+    const res = await get_jadwal();
+    const hariMap = {
+        'minggu': 0,
+        'senin': 1,
+        'selasa': 2,
+        'rabu': 3,
+        'kamis': 4,
+        'jumat': 5,
+        'sabtu': 6
+    };
 
+    const sortedJadwal = res.data.sort((a, b) => {
+        const hariA = hariMap[a.hari];
+        const hariB = hariMap[b.hari];
+        return hariA - hariB;
+    });
+
+    setJadwal(sortedJadwal);
+};
   function changeTimeformat(waktu) {
 
     // Memecah waktu menjadi array

@@ -28,19 +28,38 @@ const Dokumentasi_kegiatan = ({ params }) => {
 
   const getDokumentasi = async (jenisKegiatan) => {
     try {
-      let res = await getAllDokumentasiByJenisKegiatan(jenisKegiatan); // Menggunakan endpoint baru dengan parameter jenis kegiatan
+      let res = await getAllDokumentasiByJenisKegiatan(jenisKegiatan);
       if (isResponseError(res, setModalContent, clearState)) return;
       res = await res.json();
       const data = res.data;
-      // Memperbarui groupImage sesuai dengan data yang diterima dari backend
-      setGroupImage(data);
-      // Memperbarui photos sesuai dengan data yang diterima dari backend
-      setPhotos(data);
+  
+      // Buat objek untuk menyimpan data dokumentasi berdasarkan tahun
+      const yearMap = {};
+  
+      // Iterasi melalui data dan kelompokkan berdasarkan tahun
+      data.forEach((item) => {
+        const year = item.tahun;
+        if (!yearMap[year]) {
+          yearMap[year] = {
+            tahun: year,
+            jenis_kegiatan: item.jenis_kegiatan,
+            images: [],
+          };
+        }
+        yearMap[year].images.push(...item.images);
+      });
+  
+      // Ubah objek tahun menjadi array
+      const groupedData = Object.values(yearMap);
+  
+      // Perbarui groupImage dan photos dengan data yang telah dikelompokkan
+      setGroupImage(groupedData);
+      setPhotos(groupedData);
     } catch (error) {
       setErrorMessage('Error getting documentation: ' + error.message);
     }
   };
-
+  
   useEffect(() => {
     getDokumentasi(params.jenis_kegiatan);
   }, []);
@@ -67,7 +86,7 @@ const Dokumentasi_kegiatan = ({ params }) => {
     setSearchYear(year);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchYear) {
       setModalContent('validation', {
         message: 'Harap masukkan tahun pencarian terlebih dahulu',
@@ -76,8 +95,16 @@ const Dokumentasi_kegiatan = ({ params }) => {
       });
       return;
     }
-    photosByYearAndJenisKegiatan(params.jenis_kegiatan, searchYear);
+    try {
+      setIsLoading(true); // Tambahkan ini untuk menampilkan indikator loading
+      await photosByYearAndJenisKegiatan(params.jenis_kegiatan, searchYear);
+    } catch (error) {
+      setErrorMessage('Error searching documentation by year: ' + error.message);
+    } finally {
+      setIsLoading(false); // Tambahkan ini untuk menyembunyikan indikator loading setelah selesai
+    }
   };
+  
 
   const handleClose = () => {
     setSelectedPhoto(null);

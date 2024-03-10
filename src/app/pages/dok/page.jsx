@@ -47,7 +47,7 @@ export default function Dokumentasi() {
             Dokumentasi Kegiatan
           </h1>
           <div className="w-full overflow-x-auto relative h-[27rem] mx-5">
-            <div className="absolute left-0 flex  items-center justify-center min-[360px]:max-[765px]:flex-col  h-[27rem]">
+            <div className="sm:flex sm:flex-wrap sm:justify-center">
               {photos.map((Docs) => (
                 <EventCategoryCard value={Docs} key={Docs.dokumentasi_id} />
               ))}

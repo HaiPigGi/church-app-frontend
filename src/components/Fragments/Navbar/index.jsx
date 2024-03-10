@@ -101,20 +101,20 @@ function Navbar({ props }) {
               modalAbove={false}
               dataModal={[
                 {
-                  text: 'Pasor Paroki',
+                  text: 'Pastor Paroki',
                   href: '/pages/pastor',
                 },
                 {
-                  text: 'Kepungurasan OMK',
+                  text: 'Kepengurusan DPP',
+                  href: '/pages/DPP',
+                },
+                {
+                  text: 'Kepengurusan OMK',
                   href: '/pages/OMK',
                 },
                 {
                   text: 'Kepengurusan Misdinar',
                   href: '/pages/mesdinar',
-                },
-                {
-                  text: 'Kepengurusan DPP',
-                  href: '/pages/DPP',
                 },
                 {
                   text: 'Panitia Kegiatan',
@@ -153,20 +153,20 @@ function Navbar({ props }) {
                 datatestid="profilgereja"
                 dataModal={[
                   {
-                    text: 'Pasor Paroki',
+                    text: 'Pastor Paroki',
                     href: '/pages/pastor',
-                  },
-                  {
-                    text: 'Kepungurasan OMK',
-                    href: '/pages/OMK',
-                  },
-                  {
-                    text: 'Kepengurusan Mesdinar',
-                    href: '/pages/mesdinar',
                   },
                   {
                     text: 'Kepengurusan DPP',
                     href: '/pages/DPP',
+                  },
+                  {
+                    text: 'Kepengurusan OMK',
+                    href: '/pages/OMK',
+                  },
+                  {
+                    text: 'Kepengurusan Misdinar',
+                    href: '/pages/mesdinar',
                   },
                   {
                     text: 'Panitia Kegiatan',
