@@ -165,6 +165,10 @@ function Navbar({ props }) {
                     href: '/pages/mesdinar',
                   },
                   {
+                    text: 'Kepengurusan DPP',
+                    href: '/pages/DPP',
+                  },
+                  {
                     text: 'Panitia Kegiatan',
                     href: '/pages/panitia',
                   },

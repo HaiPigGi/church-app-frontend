@@ -8,27 +8,48 @@ import { Fragment } from 'react';
 export default function Pesan() {
   const [saranList, setSaran] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await get_Saran();
-        console.log('hasilnya :', response);
-        setSaran(response.sarans);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
     fetchData(); // Panggil fungsi fetchData saat komponen dimuat
   }, []);
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+
+  
+
+  async function fetchData() {
+    try {
+        const response = await get_Saran();
+        const dat = response.sarans;
+
+        // Menyortir array 'dat' berdasarkan tanggal 'created_at' secara menaik
+        dat.sort((a, b) => {
+            return new Date(b.created_at) - new Date(a.created_at);
+        });
+
+        setSaran(dat) // Output data yang sudah diurutkan
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
 
   const handleDelete = async (id) => {
     try {
       const res = await delete_pesan(id);
       if (res.ok) {
         setIsOpen(true);
-        getAllpesan();
+        fetchData();
       } else {
         alert('Gagal menghapus jenis misa');
       }
@@ -37,59 +58,73 @@ export default function Pesan() {
     }
   };
 
-  const getAllpesan = async () => {
-    let res = await get_Saran();
-    setSaran(res.sarans);
-    return;
-  };
-
   return (
     <div className="w-full h-screen px-5 overflow-y-auto">
       <div className="min-[360px]:max-[765px]:hidden">
         <h1 className="pt-7 pb-7 text-2xl font-semibold flex-1 text-center ">
           Pesan Dan Kritik
         </h1>
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nama Pengirim
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email Pengirim
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Pesan
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                action
-              </th>
-            </tr>
-          </thead>
-          {saranList?.length > 0 && (
-            <tbody className="bg-white divide-y divide-gray-200">
-              {saranList?.map((row, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {row.full_name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{row.email}</td>
-                  <td
-                    className="px-6 py-4 whitespace-wrap"
-                    style={{
-                      lineHeight: '1.4',
-                      maxHeight: '4.2em',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {row.message}
-                  </td>
-                  <button onClick= {()=> handleDelete(row.saran_id)} className='px-6 py-4 whitespace-wrap text-red-600'>Hapus</button>
-                </tr>
-              ))}
-            </tbody>
-          )}
-        </table>
+        <div className='min-h-[625px]'>
+
+          <table className="min-w-full divide-y divide-gray-200 ">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Nama Pengirim
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email Pengirim
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Pesan
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  action
+                </th>
+              </tr>
+            </thead>
+            {saranList?.length > 0 && (
+              <tbody className="bg-white divide-y divide-gray-200 ">
+                {saranList?.slice(startIndex,endIndex).map((row, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {row.full_name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.email}</td>
+                    <td
+                      className="px-6 py-4 whitespace-wrap"
+                      style={{
+                        lineHeight: '1.4',
+                        maxHeight: '4.2em',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {row.message}
+                    </td>
+                    <button onClick= {()=> handleDelete(row.saran_id)} className='px-6 py-4 whitespace-wrap text-red-600'>Hapus</button>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
+          <div className="flex justify-between my-4">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="bg-gray-200 px-4 py-2 rounded-md"
+          >
+            Previous
+          </button>
+          <span>Page {currentPage}</span>
+          <button
+            onClick={handleNextPage}
+            disabled={endIndex >= saranList.length}
+            className="bg-gray-200 px-4 py-2 rounded-md"
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       {/* for mobile */}

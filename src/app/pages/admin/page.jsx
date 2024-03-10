@@ -21,9 +21,7 @@ import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 function Admin() {
   const [open, setopen] = useState(true);
-  const [activeMenu, setActiveMenu] = useState('');
-  const [loading, setLoading] = useState();
-  const status = useAppSelector((state) => state.session.status);
+  const [activeMenu, setActiveMenu] = useState('Dasbor');
 
   const Menus = [
     {

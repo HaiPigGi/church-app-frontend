@@ -36,7 +36,6 @@ const Member = () => {
 
   const handleCreate = async () => {
     const { organitation_name, position_name } = employee;
-    console.log(employee);
     setLoadingState('loading');
     if (isPositionAvailable(organitation_name, position_name)) {
       const data = convertToFormData();
@@ -69,7 +68,6 @@ const Member = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     setLoadingState('loading');
     const res = await deleteMemberData(id);
     if (isResponseError(res)) return;
@@ -174,7 +172,6 @@ const Member = () => {
     }
     const idPosition = searchPositionBasedId(employee.position_name);
     const idOrg = searchOrganitationBasedId(employee.organitation_name);
-    console.log(idOrg);
     const formData = new FormData();
     formData.append('members_name', employee.members_name);
     formData.append('position_id', idPosition.position_id);
@@ -307,7 +304,6 @@ const Member = () => {
                   ...employee,
                   position_name: e.target.value,
                 });
-                console.log(employee);
               }}
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
             >
@@ -571,7 +567,6 @@ const Member = () => {
                     ...employee,
                     position_name: e.target.value,
                   });
-                  console.log(employee);
                 }}
                 className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
               >

@@ -14,15 +14,14 @@ function JadwalMisaSection() {
 
   const fetchData = async () => {
       const res = await get_jadwal();
-      setJadwal(res.data);
-        
+      const sortedJadwal = res.data.sort((a, b) => b.hari.localeCompare(a.hari));
+      setJadwal(sortedJadwal);
   };
 
   function changeTimeformat(waktu) {
 
     // Memecah waktu menjadi array
     const waktuArray = waktu.split(':');
-
     // Menggabungkan jam dan menit tanpa detik
     return  waktuArray[0] + ':' + waktuArray[1];
   }

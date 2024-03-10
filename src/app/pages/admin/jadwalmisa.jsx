@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { post_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
+import { post_JadwalMisa,get_JadwalMisa } from '@/app/api/Admin/jadwalMisa/routes';
 import { get_jenisMisa } from '@/app/api/Admin/jenismisa/routes';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
@@ -16,6 +16,7 @@ export default function jadwal() {
   });
 
   const [jenisMisaOptions, setJenisMisaOptions] = useState([]);
+  const [jadwalList, setJadwalList] = useState([])
   const {clearState,modalContent,setModalContent} = useModalContent();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,7 +25,18 @@ export default function jadwal() {
     const worshipTypes = await get_jenisMisa();
     setJenisMisaOptions(worshipTypes.data);
   }
+
+  const clearjadwa = () => {
+    setJadwal({
+      hari: 'senin',
+      waktu_mulai: '00:00',
+      waktu_selesai: '00:00',
+      jenis_misa_id: '',
+    })
+  }
+
   useEffect(() => {
+    fetchDataJadwal();
     fetchJenisMisa();
   }, []);
 
@@ -36,22 +48,31 @@ export default function jadwal() {
       });
   };
 
+  async function fetchDataJadwal(){
+    const jadwalMisa = await get_JadwalMisa();
+    setJadwalList(jadwalMisa.data);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Cek apakah data sudah ada sebelumnya
+      const isDuplicate = checkForDuplicates(Jadwa.hari, Jadwa.jenis_misa_id);
+      if (isDuplicate) {
+        setErrorMessage("Data dengan kombinasi hari dan jenis misa yang sama sudah ada.");
+        return;
+      }
+
       const data = convertToFormData(Jadwa)
-      console.log(Jadwa);
       let res = await post_JadwalMisa(data);
-      if(isResponseError(res,setModalContent,clearState)){
+      if (isResponseError(res, setModalContent, clearState)) {
         res = await res.json();
-        
-        setErrorMessage((res.error?.waktu_selesai||res.error?.waktu_mulai) ? 
+        setErrorMessage((res.error?.waktu_selesai || res.error?.waktu_mulai) ?
           "Waktu selesai lebih kecil dari waktu mulai, harap ganti!!!"
           :
           ""
-          );
-        return
+        );
+        return;
       };
       setIsAlertOpen(true);
       setJadwal({
@@ -63,6 +84,11 @@ export default function jadwal() {
     } catch (error) {
       console.log('Error:', error);
     }
+  };
+
+  const checkForDuplicates = (hari, jenisMisaId) => {
+    // Lakukan pengecekan apakah data dengan kombinasi hari dan jenis misa yang sama sudah ada dalam jenisMisaOptions
+    return jadwalList.some(option => option.hari === hari && option.jenis_misa_id === jenisMisaId);
   };
 
   
@@ -208,7 +234,10 @@ export default function jadwal() {
                   <button
                     type="button"
                     className="inline-flex justify-center  px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-                    onClick={() => setIsAlertOpen(false)}
+                    onClick={() => {
+                      clearjadwa()
+                      setIsAlertOpen(false)
+                    }}
                   >
                     Tutup
                   </button>

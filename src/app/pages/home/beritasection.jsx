@@ -80,8 +80,8 @@ function BeritaSection() {
                     : 'grid md:grid-cols-2 grid-cols-1'
                 }
               >
-                {beritaData.map((dat) => {
-                  return <BeritaCard data={dat} />;
+                {beritaData.map((dat,index) => {
+                  return <BeritaCard data={dat} key={index}/>;
                 })}
               </div>
             ) : (

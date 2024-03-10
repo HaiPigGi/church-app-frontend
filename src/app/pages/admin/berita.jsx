@@ -51,7 +51,6 @@ const berita = () => {
             ...errorMessage,
             contentError: '',
           });
-          console.log('success');
         }
         break;
     }
@@ -61,7 +60,6 @@ const berita = () => {
     const { name, value } = e.target;
     checkInputs(name, value);
     setBerita({ ...berita, [name]: value });
-    console.log(berita);
   };
 
   const handleDelete = async () => {
@@ -87,7 +85,6 @@ const berita = () => {
     let res = await get_AllBerita();
     if (isResponseError(res, setModalContent, clearState)) return;
     res = await res.json();
-    console.log(res);
     setBeritaList(res.data);
     setLoadingFetching(false);
     return;
@@ -118,7 +115,6 @@ const berita = () => {
       message: 'Data berhasil disimpan',
       action: clearState,
     });
-    console.log(res);
     getBeritaData();
   };
 
@@ -146,7 +142,6 @@ const berita = () => {
         ...errorMessage,
         contentError: 'File size must be less than 20 MB',
       });
-      console.log('ERROR AT IMAGE');
       // Clear the file input
       fileInput.value = '';
     }
@@ -311,9 +306,7 @@ const berita = () => {
               dataBerita={berita_list}
               action={{
                 selectBerita: (id) => {
-                  console.log('BeritaID : ', id);
                   const data = findBeritaBasedID(id);
-                  console.log('Berita Data : ', data);
                   setBerita(data);
                   setShownImage(data.image.url);
                 },
